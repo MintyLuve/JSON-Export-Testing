@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="350dp"
+        android:text="JSON Export + Variable Test"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/data1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="101dp"
+        android:textSize="50sp"
+        android:inputType="text"
+        android:hint="Input Data 1"
+        app:layout_constraintBottom_toTopOf="@id/data2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/data2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:textSize="50sp"
+        android:inputType="text"
+        android:hint="Input Data 2"
+        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/data1" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/froBlue"
+        android:text="Submit"
+        android:textSize="50sp"
+        android:onClick="submitAnswers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/confirmation"
+        tools:layout_editor_absoluteX="158dp"
+        tools:layout_editor_absoluteY="568dp" />
+
+    <TextView
+        android:id="@+id/confirmation"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"
+        android:text="Send To Database?"
+        android:textAlignment="center"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="sans-serif-black"
+        app:layout_constraintBottom_toTopOf="@+id/yesButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/yesButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#1AFF00"
+        android:textColor="@color/black"
+        android:visibility="invisible"
+        android:text="Yes"
+        android:textSize="30sp"
+        android:onClick="submitAnswers"
+        app:layout_constraintEnd_toStartOf="@id/noButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="158dp"
+        tools:layout_editor_absoluteY="568dp" />
+    <Button
+        android:id="@+id/noButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#FF0000"
+        android:textColor="@color/black"
+        android:visibility="invisible"
+        android:text="No"
+        android:textSize="30sp"
+        android:onClick="submitAnswers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/yesButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="158dp"
+        tools:layout_editor_absoluteY="568dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
