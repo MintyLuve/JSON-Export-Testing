@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         writer.write(content.toString().getBytes());
         writer.close();
     }
-
+    //JSON class
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
