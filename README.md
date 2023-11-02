@@ -1,4 +1,4 @@
-# JSON-Export-Testing - CAR
+# JSON-Export-Testing - Test 1
 A repository to test exporting to a JSON, using Android Studio app development.
 
-Second version of the JSON export test
+This is the first version of the test
