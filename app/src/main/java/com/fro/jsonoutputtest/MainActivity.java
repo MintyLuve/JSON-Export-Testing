@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     // defining variables
     EditText data1;
-    String outputData1;
+    String outputData1 = "Input";
     EditText data2;
     String outputData2;
     Button submitButton;
@@ -39,15 +40,10 @@ public class MainActivity extends AppCompatActivity {
     Button noButton;
     TextView confirmation;
     Button nextPageButton;
+    SharedPreferences myPrefs;
 
-    public void toJSON(JSONObject content) throws IOException {
-        // Class to put the data into a JSON object
-        File path = getApplicationContext().getFilesDir();
-        Toast.makeText(MainActivity.this, path.toString(), Toast.LENGTH_SHORT).show();
-        FileOutputStream writer = new FileOutputStream(new File(path, "JSON_Text.txt"));
-        writer.write(content.toString().getBytes());
-        writer.close();
-    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
         noButton = (Button) findViewById(R.id.noButton);
         confirmation = (TextView) findViewById(R.id.confirmation);
         nextPageButton = (Button) findViewById(R.id.nextPageButton);
+        myPrefs = getSharedPreferences("prefID", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = myPrefs.edit();
+
+        outputData1 = myPrefs.getString("1",outputData1);
+        data1.setText(outputData1);
+        outputData2 = myPrefs.getString("2",outputData2);
+        data1.setText(outputData2);
+
+
 
         nextPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,12 +80,16 @@ public class MainActivity extends AppCompatActivity {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 outputData1 = data1.getText().toString();
+                editor.putString("1", outputData1);
+                editor.apply();
                 confirmation.setText(outputData1);
             } @Override public void afterTextChanged(Editable s) {} });
         data2.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 outputData2 = data2.getText().toString();
+                editor.putString("2", outputData2);
+                editor.apply();
                 confirmation.setText(outputData2);
             } @Override public void afterTextChanged(Editable s) {} });
 
@@ -124,6 +133,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            }
+
+            public void toJSON(JSONObject content) throws IOException {
+                // Class to put the data into a JSON object
+                File path = getApplicationContext().getFilesDir();
+                Toast.makeText(MainActivity.this, path.toString(), Toast.LENGTH_SHORT).show();
+                FileOutputStream writer = new FileOutputStream(new File(path, "JSON_Text.txt"));
+                writer.write(content.toString().getBytes());
+                writer.close();
             }
         });
 

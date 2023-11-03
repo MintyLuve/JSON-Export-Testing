@@ -112,7 +112,7 @@
 
     <Button
         android:id="@+id/nextPageButton"
-        android:layout_width="300dp"
+        android:layout_width="200dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/froBlue"
         android:textColor="@color/white"
