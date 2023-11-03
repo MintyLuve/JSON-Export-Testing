@@ -2,8 +2,16 @@ package com.fro.jsonoutputtest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Button yesButton;
     Button noButton;
     TextView confirmation;
+    Button nextPageButton;
 
     public void toJSON(JSONObject content) throws IOException {
         // Class to put the data into a JSON object
@@ -52,6 +61,28 @@ public class MainActivity extends AppCompatActivity {
         yesButton = (Button) findViewById(R.id.yesButton);
         noButton = (Button) findViewById(R.id.noButton);
         confirmation = (TextView) findViewById(R.id.confirmation);
+        nextPageButton = (Button) findViewById(R.id.nextPageButton);
+
+        nextPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        data1.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                outputData1 = data1.getText().toString();
+                confirmation.setText(outputData1);
+            } @Override public void afterTextChanged(Editable s) {} });
+        data2.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                outputData2 = data2.getText().toString();
+                confirmation.setText(outputData2);
+            } @Override public void afterTextChanged(Editable s) {} });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 if (confirmation.getText() != "Send to Database?") {
                     confirmation.setText("Send to Database?");
                 }
-
-                outputData1 = data1.getText().toString();
-                outputData2 = data2.getText().toString();
 
                 yesButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -82,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
                         try {toJSON(jsonObject);} catch (IOException e) {e.printStackTrace();}
 
                         confirmation.setText(outputData1+", "+outputData2);
-
                     }
                 });
 
@@ -94,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
                         confirmation.setVisibility(View.INVISIBLE);
                     }
                 });
+
+
 
             }
         });

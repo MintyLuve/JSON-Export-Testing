@@ -11,11 +11,12 @@
         android:id="@+id/textView"
         android:layout_width="250dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="350dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="60dp"
         android:text="JSON Export + Variable Test"
         android:textAlignment="center"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/data1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -80,7 +81,7 @@
         android:id="@+id/yesButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="90dp"
         android:backgroundTint="#1AFF00"
         android:textColor="@color/black"
         android:visibility="invisible"
@@ -96,7 +97,7 @@
         android:id="@+id/noButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="90dp"
         android:backgroundTint="#FF0000"
         android:textColor="@color/black"
         android:visibility="invisible"
@@ -108,5 +109,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="158dp"
         tools:layout_editor_absoluteY="568dp" />
+
+    <Button
+        android:id="@+id/nextPageButton"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/froBlue"
+        android:textColor="@color/white"
+        android:text="Next Page"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/yesButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
