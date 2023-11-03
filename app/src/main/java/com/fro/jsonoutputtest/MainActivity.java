@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,13 +108,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 outputData1 = null;
                 data1.setText(outputData1);
-                editor.putString("1", outputData1);
+                editor.putString("1", null);
                 editor.apply();
 
                 outputData2 = null;
                 data2.setText(outputData2);
-                editor.putString("1", outputData2);
+                editor.putString("1", null);
                 editor.apply();
+
+                editor.putString("3", null);
+                editor.apply();
+
                 confirmation.setText("Send to Database?");
                 yesButton.setVisibility(View.INVISIBLE);
                 noButton.setVisibility(View.INVISIBLE);
@@ -143,10 +145,13 @@ public class MainActivity extends AppCompatActivity {
                         noButton.setVisibility(View.INVISIBLE);
                         JSONObject jsonObject = new JSONObject();
 
-                        try {jsonObject.put("OUTPUT_DATA_1", outputData1);}
+                        try {jsonObject.put("OUTPUT_DATA_1", myPrefs.getString("1",null));}
                         catch (JSONException e) {throw new RuntimeException(e);}
 
-                        try {jsonObject.put("OUTPUT_DATA_2", outputData2);}
+                        try {jsonObject.put("OUTPUT_DATA_2", myPrefs.getString("2",null));}
+                        catch (JSONException e) {throw new RuntimeException(e);}
+
+                        try {jsonObject.put("OUTPUT_DATA_3", myPrefs.getString("3",null));}
                         catch (JSONException e) {throw new RuntimeException(e);}
 
                         try {toJSON(jsonObject);} catch (IOException e) {e.printStackTrace();}
