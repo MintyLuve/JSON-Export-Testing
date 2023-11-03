@@ -14,17 +14,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class SecondActivity extends AppCompatActivity {
 
     // defining edit text
     EditText data3;
     //defining buttons
-    Button backButton;
     Button clearButton;
     //defining strings
     String outputData3;
     //defining preferences
     SharedPreferences myPrefs;
+    //define bottom nav
+    BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -36,20 +39,27 @@ public class SecondActivity extends AppCompatActivity {
         data3 = (EditText) findViewById(R.id.data3);
         // init buttons
         clearButton = (Button) findViewById(R.id.clearTextButton);
-        backButton = (Button) findViewById(R.id.backButton);
         //init preferences
         myPrefs = getSharedPreferences("prefID", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = myPrefs.edit();
+        //init nav view
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.page_1);
 
         outputData3 = myPrefs.getString("3",outputData3);
         data3.setText(outputData3);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+        // when you click different pages on bottom bar view it changes page
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.page_1) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             }
+            else if (item.getItemId() == R.id.submit) {
+                startActivity(new Intent(getApplicationContext(), SubmitActivity.class));
+                finish();
+            }
+            return false;
         });
 
         // Updates variable (output2) when the text is changed
@@ -61,6 +71,7 @@ public class SecondActivity extends AppCompatActivity {
                 editor.apply();
             } @Override public void afterTextChanged(Editable s) {} });
 
+        // clears inputs
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
