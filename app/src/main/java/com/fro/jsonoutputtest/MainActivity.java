@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,19 +36,14 @@ public class MainActivity extends AppCompatActivity {
     EditText data1;
     EditText data2;
     //defining buttons
-    Button submitButton;
-    Button yesButton;
-    Button noButton;
-    Button nextPageButton;
     Button clearButton;
     //defining strings
     String outputData1;
     String outputData2;
-    TextView confirmation;
     //defining preferences
     SharedPreferences myPrefs;
-
-
+    //define bottom nav
+    BottomNavigationView bottomNavigationView;
 
 
 
@@ -59,16 +56,14 @@ public class MainActivity extends AppCompatActivity {
         data1 = (EditText) findViewById(R.id.data1);
         data2 = (EditText) findViewById(R.id.data2);
         // init buttons
-        submitButton = (Button) findViewById(R.id.submitButton);
-        yesButton = (Button) findViewById(R.id.yesButton);
-        noButton = (Button) findViewById(R.id.noButton);
-        nextPageButton = (Button) findViewById(R.id.nextPageButton);
         clearButton = (Button) findViewById(R.id.clearTextButton);
-        //init textview
-        confirmation = (TextView) findViewById(R.id.confirmation);
         //init preferences
         myPrefs = getSharedPreferences("prefID", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = myPrefs.edit();
+        //init nav view
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.page_1);
+
 
         // setting data to save when reopening the page
         outputData1 = myPrefs.getString("1",outputData1);
@@ -76,13 +71,19 @@ public class MainActivity extends AppCompatActivity {
         outputData2 = myPrefs.getString("2",outputData2);
         data2.setText(outputData2);
 
+        // when you click different pages on bottom bar view it changes page
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.page_2) {
+                    startActivity(new Intent(getApplicationContext(), SecondActivity.class));
+                    finish();
+            }
+            else if (item.getItemId() == R.id.submit) {
+                    startActivity(new Intent(getApplicationContext(), SubmitActivity.class));
+                    finish();
+            }
+            return false;
+        });
 
-        // switches activities
-        nextPageButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
-                startActivity(intent);
-            } });
 
         // Updates variable (output1) when the text is changed
         data1.addTextChangedListener(new TextWatcher() {
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 outputData1 = data1.getText().toString();
                 editor.putString("1", outputData1);
                 editor.apply();
-                confirmation.setText(outputData1);
             } @Override public void afterTextChanged(Editable s) {} });
 
         // Updates variable (output2) when the text is changed
@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 outputData2 = data2.getText().toString();
                 editor.putString("2", outputData2);
                 editor.apply();
-                confirmation.setText(outputData2);
             } @Override public void afterTextChanged(Editable s) {} });
 
         //clears inputs
@@ -110,75 +109,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 outputData1 = null;
                 data1.setText(outputData1);
-                editor.putString("1", outputData1);
+                editor.putString("1", null);
                 editor.apply();
 
                 outputData2 = null;
                 data2.setText(outputData2);
-                editor.putString("1", outputData2);
+                editor.putString("1", null);
                 editor.apply();
-                confirmation.setText("Send to Database?");
-                yesButton.setVisibility(View.INVISIBLE);
-                noButton.setVisibility(View.INVISIBLE);
-                confirmation.setVisibility(View.INVISIBLE);
-            }
-        });
 
-        // when the submit button is clicked it makes options visible
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                yesButton.setVisibility(View.VISIBLE);
-                noButton.setVisibility(View.VISIBLE);
-                confirmation.setVisibility(View.VISIBLE);
-                if (confirmation.getText() != "Send to Database?") {
-                    confirmation.setText("Send to Database?");
-                }
-
-                //If yes button is clicked, sets the buttons invisible, and outputs the data into a JSON
-                yesButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        yesButton.setVisibility(View.INVISIBLE);
-                        noButton.setVisibility(View.INVISIBLE);
-                        JSONObject jsonObject = new JSONObject();
-
-                        try {jsonObject.put("OUTPUT_DATA_1", outputData1);}
-                        catch (JSONException e) {throw new RuntimeException(e);}
-
-                        try {jsonObject.put("OUTPUT_DATA_2", outputData2);}
-                        catch (JSONException e) {throw new RuntimeException(e);}
-
-                        try {toJSON(jsonObject);} catch (IOException e) {e.printStackTrace();}
-
-                        confirmation.setText(outputData1+", "+outputData2);
-                    }
-                });
-
-                //If the no button is clicked it hides the buttons
-                noButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        yesButton.setVisibility(View.INVISIBLE);
-                        noButton.setVisibility(View.INVISIBLE);
-                        confirmation.setVisibility(View.INVISIBLE);
-                    }
-                });
-
-
-            }
-
-            // sends data to a json
-            public void toJSON(JSONObject content) throws IOException {
-                // Class to put the data into a JSON object
-                File path = getApplicationContext().getFilesDir();
-                Toast.makeText(MainActivity.this, path.toString(), Toast.LENGTH_SHORT).show();
-                FileOutputStream writer = new FileOutputStream(new File(path, "JSON_Text.txt"));
-                writer.write(content.toString().getBytes());
-                writer.close();
+                editor.putString("3", null);
+                editor.apply();
             }
         });
 
     }
-
 }
