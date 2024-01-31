@@ -76,8 +76,9 @@ public class SubmitActivity extends AppCompatActivity {
                 yesButton.setVisibility(View.VISIBLE);
                 noButton.setVisibility(View.VISIBLE);
                 confirmation.setVisibility(View.VISIBLE);
-                if (confirmation.getText() != "Send to Database?") {
-                    confirmation.setText("Send to Database?");
+                String sendTo = "Send to Database?";
+                if (!confirmation.getText().equals(sendTo)) {
+                    confirmation.setText(sendTo);
                 }
 
                 //If yes button is clicked, sets the buttons invisible, and outputs the data into a JSON
@@ -88,18 +89,21 @@ public class SubmitActivity extends AppCompatActivity {
                         noButton.setVisibility(View.INVISIBLE);
                         JSONObject jsonObject = new JSONObject();
 
-                        try {jsonObject.put("OUTPUT_DATA_1", myPrefs.getString("1",null));}
+                        try {jsonObject.put("OUTPUT_DATA_1", myPrefs.getString(Constants.FIRST_NAME.toString(),null));}
                         catch (JSONException e) {throw new RuntimeException(e);}
 
-                        try {jsonObject.put("OUTPUT_DATA_2", myPrefs.getString("2",null));}
+                        try {jsonObject.put("OUTPUT_DATA_2", myPrefs.getString(Constants.LAST_NAME.toString(),null));}
                         catch (JSONException e) {throw new RuntimeException(e);}
 
-                        try {jsonObject.put("OUTPUT_DATA_3", myPrefs.getString("3",null));}
+                        try {jsonObject.put("OUTPUT_DATA_3", myPrefs.getString(Constants.TEAM_NUMBER.toString(),null));}
                         catch (JSONException e) {throw new RuntimeException(e);}
 
                         try {toJSON(jsonObject);} catch (IOException e) {e.printStackTrace();}
 
-                        confirmation.setText(myPrefs.getString("1", null) + ", " + myPrefs.getString("2", null) + ", " + myPrefs.getString("3", null));
+                        String output = myPrefs.getString(Constants.FIRST_NAME.toString(), null)
+                                + ", " + myPrefs.getString(Constants.LAST_NAME.toString(), null)
+                                + ", " + myPrefs.getString(Constants.TEAM_NUMBER.toString(), null);
+                        confirmation.setText(output);
                     }
                 });
                 //If the no button is clicked it hides the buttons

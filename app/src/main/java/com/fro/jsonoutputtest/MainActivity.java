@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         // setting data to save when reopening the page
-        outputData1 = myPrefs.getString("1",outputData1);
+        outputData1 = myPrefs.getString(Constants.FIRST_NAME.toString(),outputData1);
         data1.setText(outputData1);
-        outputData2 = myPrefs.getString("2",outputData2);
+        outputData2 = myPrefs.getString(Constants.LAST_NAME.toString(),outputData2);
         data2.setText(outputData2);
 
         // when you click different pages on bottom bar view it changes page
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 outputData1 = data1.getText().toString();
-                editor.putString("1", outputData1);
+                editor.putString(Constants.FIRST_NAME.toString(), outputData1);
                 editor.apply();
             } @Override public void afterTextChanged(Editable s) {} });
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 outputData2 = data2.getText().toString();
-                editor.putString("2", outputData2);
+                editor.putString(Constants.LAST_NAME.toString(), outputData2);
                 editor.apply();
             } @Override public void afterTextChanged(Editable s) {} });
 
@@ -109,15 +109,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 outputData1 = null;
                 data1.setText(outputData1);
-                editor.putString("1", null);
+                editor.putString(Constants.FIRST_NAME.toString(), null);
                 editor.apply();
 
                 outputData2 = null;
                 data2.setText(outputData2);
-                editor.putString("1", null);
+                editor.putString(Constants.LAST_NAME.toString(), null);
                 editor.apply();
 
-                editor.putString("3", null);
+                editor.putString(Constants.TEAM_NUMBER.toString(), null);
                 editor.apply();
             }
         });

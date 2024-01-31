@@ -46,7 +46,7 @@ public class SecondActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.page_1);
 
-        outputData3 = myPrefs.getString("3",outputData3);
+        outputData3 = myPrefs.getString(Constants.TEAM_NUMBER.toString(),outputData3);
         data3.setText(outputData3);
 
         // when you click different pages on bottom bar view it changes page
@@ -67,7 +67,7 @@ public class SecondActivity extends AppCompatActivity {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 outputData3 = data3.getText().toString();
-                editor.putString("3", outputData3);
+                editor.putString(Constants.TEAM_NUMBER.toString(), outputData3);
                 editor.apply();
             } @Override public void afterTextChanged(Editable s) {} });
 
@@ -75,15 +75,15 @@ public class SecondActivity extends AppCompatActivity {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putString("1", null);
+                editor.putString(Constants.FIRST_NAME.toString(), null);
                 editor.apply();
 
-                editor.putString("2", null);
+                editor.putString(Constants.LAST_NAME.toString(), null);
                 editor.apply();
 
                 outputData3 = null;
                 data3.setText(outputData3);
-                editor.putString("3", null);
+                editor.putString(Constants.TEAM_NUMBER.toString(), null);
                 editor.apply();
             }});
     }
