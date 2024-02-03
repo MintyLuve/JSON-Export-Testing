@@ -40,12 +40,8 @@ public class MainActivity extends AppCompatActivity {
     //defining strings
     String outputData1;
     String outputData2;
-    //defining preferences
-    SharedPreferences myPrefs;
     //define bottom nav
     BottomNavigationView bottomNavigationView;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,41 +53,31 @@ public class MainActivity extends AppCompatActivity {
         data2 = (EditText) findViewById(R.id.data2);
         // init buttons
         clearButton = (Button) findViewById(R.id.clearTextButton);
-        //init preferences
-        myPrefs = getSharedPreferences("prefID", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = myPrefs.edit();
         //init nav view
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.page_1);
 
 
         // setting data to save when reopening the page
-        outputData1 = myPrefs.getString(Constants.FIRST_NAME.toString(),outputData1);
-        data1.setText(outputData1);
-        outputData2 = myPrefs.getString(Constants.LAST_NAME.toString(),outputData2);
-        data2.setText(outputData2);
+        data1.setText(testConstants.uno);
+        data2.setText(testConstants.dos);
 
         // when you click different pages on bottom bar view it changes page
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if(item.getItemId() == R.id.page_2) {
                     startActivity(new Intent(getApplicationContext(), SecondActivity.class));
-                    finish();
-            }
+                    finish();}
             else if (item.getItemId() == R.id.submit) {
                     startActivity(new Intent(getApplicationContext(), SubmitActivity.class));
-                    finish();
-            }
-            return false;
-        });
-
+                    finish();}
+            return false;});
 
         // Updates variable (output1) when the text is changed
         data1.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 outputData1 = data1.getText().toString();
-                editor.putString(Constants.FIRST_NAME.toString(), outputData1);
-                editor.apply();
+                testConstants.uno = outputData1;
             } @Override public void afterTextChanged(Editable s) {} });
 
         // Updates variable (output2) when the text is changed
@@ -99,8 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 outputData2 = data2.getText().toString();
-                editor.putString(Constants.LAST_NAME.toString(), outputData2);
-                editor.apply();
+                testConstants.dos = outputData2;
             } @Override public void afterTextChanged(Editable s) {} });
 
         //clears inputs
@@ -109,18 +94,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 outputData1 = null;
                 data1.setText(outputData1);
-                editor.putString(Constants.FIRST_NAME.toString(), null);
-                editor.apply();
+                testConstants.uno = outputData1;
 
                 outputData2 = null;
                 data2.setText(outputData2);
-                editor.putString(Constants.LAST_NAME.toString(), null);
-                editor.apply();
+                testConstants.dos = outputData2;
 
-                editor.putString(Constants.TEAM_NUMBER.toString(), null);
-                editor.apply();
-            }
-        });
-
+                testConstants.tres = null;
+        }});
     }
 }

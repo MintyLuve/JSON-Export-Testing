@@ -28,11 +28,9 @@ public class SubmitActivity extends AppCompatActivity {
     Button noButton;
     //defining text view
     TextView confirmation;
-    //defining preferences
-    SharedPreferences myPrefs;
     //define bottom nav
     BottomNavigationView bottomNavigationView;
-    //define calander
+    //define calendar
     Calendar calendar;
 
 
@@ -47,9 +45,6 @@ public class SubmitActivity extends AppCompatActivity {
         noButton = (Button) findViewById(R.id.noButton);
         //init textview
         confirmation = (TextView) findViewById(R.id.confirmation);
-        //init prefs
-        myPrefs = getSharedPreferences("prefID", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = myPrefs.edit();
         //init nav view
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.page_1);
@@ -60,15 +55,11 @@ public class SubmitActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if(item.getItemId() == R.id.page_1) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
-            }
+                finish();}
             else if (item.getItemId() == R.id.page_2) {
                 startActivity(new Intent(getApplicationContext(), SecondActivity.class));
-                finish();
-            }
-            return false;
-        });
-
+                finish();}
+            return false;});
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,20 +80,18 @@ public class SubmitActivity extends AppCompatActivity {
                         noButton.setVisibility(View.INVISIBLE);
                         JSONObject jsonObject = new JSONObject();
 
-                        try {jsonObject.put("OUTPUT_DATA_1", myPrefs.getString(Constants.FIRST_NAME.toString(),null));}
+                        try {jsonObject.put("OUTPUT_DATA_1", testConstants.uno);}
                         catch (JSONException e) {throw new RuntimeException(e);}
 
-                        try {jsonObject.put("OUTPUT_DATA_2", myPrefs.getString(Constants.LAST_NAME.toString(),null));}
+                        try {jsonObject.put("OUTPUT_DATA_2",testConstants.dos);}
                         catch (JSONException e) {throw new RuntimeException(e);}
 
-                        try {jsonObject.put("OUTPUT_DATA_3", myPrefs.getString(Constants.TEAM_NUMBER.toString(),null));}
+                        try {jsonObject.put("OUTPUT_DATA_3", testConstants.tres);}
                         catch (JSONException e) {throw new RuntimeException(e);}
 
                         try {toJSON(jsonObject);} catch (IOException e) {e.printStackTrace();}
 
-                        String output = myPrefs.getString(Constants.FIRST_NAME.toString(), null)
-                                + ", " + myPrefs.getString(Constants.LAST_NAME.toString(), null)
-                                + ", " + myPrefs.getString(Constants.TEAM_NUMBER.toString(), null);
+                        String output = testConstants.uno + ", " + testConstants.dos + ", " + testConstants.tres;
                         confirmation.setText(output);
                     }
                 });
@@ -127,6 +116,5 @@ public class SubmitActivity extends AppCompatActivity {
                 writer.close();
             }
         });
-
     }
 }
