@@ -111,7 +111,7 @@ public class SubmitActivity extends AppCompatActivity {
                 // Class to put the data into a JSON object
                 File path = getApplicationContext().getFilesDir();
                 Toast.makeText(SubmitActivity.this, path.toString(), Toast.LENGTH_SHORT).show();
-                FileOutputStream writer = new FileOutputStream(new File(path, "JSON_Text_" + calendar.getTimeInMillis() + ".txt"));
+                FileOutputStream writer = new FileOutputStream(new File(path, "JSON_Text_" + calendar.getTimeInMillis() + ".json"));
                 writer.write(content.toString().getBytes());
                 writer.close();
             }
