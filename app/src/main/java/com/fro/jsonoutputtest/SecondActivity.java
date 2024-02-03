@@ -22,8 +22,6 @@ public class SecondActivity extends AppCompatActivity {
     EditText data3;
     //defining buttons
     Button clearButton;
-    //defining strings
-    String outputData3;
     //define bottom nav
     BottomNavigationView bottomNavigationView;
 
@@ -57,8 +55,7 @@ public class SecondActivity extends AppCompatActivity {
         data3.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                outputData3 = data3.getText().toString();
-                testConstants.tres = outputData3;
+                testConstants.tres = data3.getText().toString();
             } @Override public void afterTextChanged(Editable s) {} });
 
         //clears inputs
@@ -68,9 +65,8 @@ public class SecondActivity extends AppCompatActivity {
                 testConstants.uno = null;
                 testConstants.dos = null;
 
-                outputData3 = null;
-                data3.setText(outputData3);
-                testConstants.tres = outputData3;
+                data3.setText(null);
+                testConstants.tres = null;
             }});
     }
 }

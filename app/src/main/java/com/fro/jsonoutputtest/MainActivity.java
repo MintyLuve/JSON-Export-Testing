@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     EditText data2;
     //defining buttons
     Button clearButton;
-    //defining strings
-    String outputData1;
-    String outputData2;
     //define bottom nav
     BottomNavigationView bottomNavigationView;
 
@@ -76,29 +73,25 @@ public class MainActivity extends AppCompatActivity {
         data1.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                outputData1 = data1.getText().toString();
-                testConstants.uno = outputData1;
+                testConstants.uno = data1.getText().toString();
             } @Override public void afterTextChanged(Editable s) {} });
 
         // Updates variable (output2) when the text is changed
         data2.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                outputData2 = data2.getText().toString();
-                testConstants.dos = outputData2;
+                testConstants.dos = data2.getText().toString();
             } @Override public void afterTextChanged(Editable s) {} });
 
         //clears inputs
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                outputData1 = null;
-                data1.setText(outputData1);
-                testConstants.uno = outputData1;
+                data1.setText(null);
+                testConstants.uno = null;
 
-                outputData2 = null;
-                data2.setText(outputData2);
-                testConstants.dos = outputData2;
+                data2.setText(null);
+                testConstants.dos = null;
 
                 testConstants.tres = null;
         }});
